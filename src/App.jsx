@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useRef } from 'react'
+
+import Button from './components/Button'
+import { PlusIcon, MinusIcon } from '@phosphor-icons/react'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const inputRef = useRef(null)
+
+  const increment = () => setCount((c) => c + 1)
+  const decrement = () => setCount((c) => c - 1)
+  const incrementByAmount = () =>
+    setCount((c) => c + Number(inputRef.current.value))
+
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='container my-10'>
+      <div className='lg:w-lg mx-auto p-4'>
+        <div className='text-center text-neutral-100'>
+          <h1 className='text-4xl font-bold'>Let's count!</h1>
+          <p className='text-xl my-4 text-primary font-bold'>{count}</p>
+        </div>
+        <div className='flex items-center gap-4 justify-center'>
+          <Button title='Increment' icon={<PlusIcon />} onClick={increment} />
+          <Button title='Decrement' icon={<MinusIcon />} onClick={decrement} />
+        </div>
+        <div className='my-7 text-center'>
+          <h3 className='text-neutral-100 font-semibold text-lg'>
+            Increment by amount
+          </h3>
+          <div className='flex items-center justify-center gap-3'>
+            <input
+              ref={inputRef}
+              className='bg-surface border border-secondary font-mono py-2 px-1 rounded-md my-4 text-neutral-100 '
+              type='number'
+            />
+            <Button icon={<PlusIcon size={24} />} onClick={incrementByAmount} />
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
