@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className='container my-10'>
-      <div className='lg:w-lg mx-auto p-4'>
+      <div className='lg:w-lg mx-auto '>
         <div className='text-center text-neutral-100'>
           <h1 className='text-4xl font-bold'>Let's count!</h1>
           <p className='text-xl my-4 text-primary font-bold'>{count}</p>
