@@ -9,14 +9,9 @@ import countReducer from './countReducer'
 function App() {
 
   const inputRef = useRef(null)
-  const initialState = [
-    {item: 'oooio'},
-    {item: 'oooio'},
-    {item: 'oooio'},
-    {item: 'oooio'},
-    {item: 'oooio'},
-  ]
+  const initialState = 0
   const [count, dispatchCount] = useReducer(countReducer, initialState)
+
 
 
 
