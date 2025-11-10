@@ -1,5 +1,10 @@
 import { useState, useRef, useReducer } from 'react'
 
+import { useSelector, useDispatch } from 'react-redux'
+
+import { increment, decrement, incrementByAmount } from './store/counterSlice'
+
+
 import Button from './components/Button'
 import { PlusIcon, MinusIcon } from '@phosphor-icons/react'
 
@@ -9,33 +14,25 @@ import countReducer from './countReducer'
 function App() {
 
   const inputRef = useRef(null)
-  const initialState = 0
-  const [count, dispatchCount] = useReducer(countReducer, initialState)
-
-
-
+ 
+  const count = useSelector(state => state.count) 
+  const dispatch = useDispatch()
 
   // const increment = () => setCount((c) => c + 1)
   // const decrement = () => setCount((c) => c - 1)
   // const incrementByAmount = () =>
   //   setCount((c) => c + Number(inputRef.current.value))
 
-  function increment() {
-    // dispatchCount({ type: 'increment' })
-    countReducer(initialState,{ type: 'decrement' })
+  function handleIncrement() {
+   dispatch(increment())
   }
 
-  function decrement() {
-    dispatchCount({ type: 'decrement' })
+  function handleDecrement() {
+   dispatch(decrement())
   }
 
-  function incrementByAmount() {
-    dispatchCount({
-      type: 'incrementByAmount', 
-      payload: {
-        amount: inputRef.current.value
-      }
-    })
+  function handleIncrementByAmount() {
+   dispatch(incrementByAmount({amount: inputRef.current.value}))
   }
 
   return (
@@ -43,11 +40,11 @@ function App() {
       <div className='lg:w-lg mx-auto '>
         <div className='text-center text-neutral-100'>
           <h1 className='text-4xl font-bold'>Let's count!</h1>
-          <p className='text-xl my-4 text-primary font-bold'>{count}</p>
+          <p className='text-xl my-4 text-primary font-bold'>{count.value}</p>
         </div>
         <div className='flex items-center gap-4 justify-center'>
-          <Button title='Increment' icon={<PlusIcon />} onClick={increment} />
-          <Button title='Decrement' icon={<MinusIcon />} onClick={decrement} />
+          <Button title='Increment' icon={<PlusIcon />} onClick={handleIncrement} />
+          <Button title='Decrement' icon={<MinusIcon />} onClick={handleDecrement} />
         </div>
         <div className='my-7 text-center'>
           <h3 className='text-neutral-100 font-semibold text-lg'>
@@ -59,7 +56,7 @@ function App() {
               className='bg-surface border border-secondary font-mono py-2 px-1 rounded-md my-4 text-neutral-100 '
               type='number'
             />
-            <Button icon={<PlusIcon size={24} />} onClick={incrementByAmount} />
+            <Button icon={<PlusIcon size={24} />} onClick={handleIncrementByAmount} />
           </div>
         </div>
       </div>
