@@ -1,17 +1,47 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useReducer } from 'react'
 
 import Button from './components/Button'
 import { PlusIcon, MinusIcon } from '@phosphor-icons/react'
 
+import countReducer from './countReducer'
+
+
 function App() {
-  const [count, setCount] = useState(0)
 
   const inputRef = useRef(null)
+  const initialState = [
+    {item: 'oooio'},
+    {item: 'oooio'},
+    {item: 'oooio'},
+    {item: 'oooio'},
+    {item: 'oooio'},
+  ]
+  const [count, dispatchCount] = useReducer(countReducer, initialState)
 
-  const increment = () => setCount((c) => c + 1)
-  const decrement = () => setCount((c) => c - 1)
-  const incrementByAmount = () =>
-    setCount((c) => c + Number(inputRef.current.value))
+
+
+  // const increment = () => setCount((c) => c + 1)
+  // const decrement = () => setCount((c) => c - 1)
+  // const incrementByAmount = () =>
+  //   setCount((c) => c + Number(inputRef.current.value))
+
+  function increment() {
+    // dispatchCount({ type: 'increment' })
+    countReducer(initialState,{ type: 'decrement' })
+  }
+
+  function decrement() {
+    dispatchCount({ type: 'decrement' })
+  }
+
+  function incrementByAmount() {
+    dispatchCount({
+      type: 'incrementByAmount', 
+      payload: {
+        amount: inputRef.current.value
+      }
+    })
+  }
 
   return (
     <div className='container my-10'>
